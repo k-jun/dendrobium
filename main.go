@@ -4,9 +4,11 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"os"
 )
 
-var kFlag = flag.String("k", "", "")
+var kFlag = flag.String("k", "こんにちわ", "hiragana string value that is converted to romaji.")
+var version string = "vX.X.X"
 
 // https://www.ezairyu.mofa.go.jp/passport/hebon.html
 var kanaToRomaji = map[rune]string{
@@ -48,6 +50,14 @@ var kanaToRomajiCombo = map[string]string{
 }
 
 func main() {
+	flag.Usage = func() {
+		fmt.Fprintf(
+			flag.CommandLine.Output(),
+			"Name:     %s\nVersion:  %s\nOPTIONS:\n",
+			os.Args[0], version,
+		)
+		flag.PrintDefaults()
+	}
 	flag.Parse()
 	x, err := convertKanaToRomaji(*kFlag)
 	if err != nil {
