@@ -14,6 +14,23 @@ var (
 	build    string
 )
 
+func main() {
+	flag.Usage = func() {
+		fmt.Fprintf(
+			flag.CommandLine.Output(),
+			"Name:    %s\nVersion: %s\nRevision %s\nBuild:   %s\nOPTIONS:\n",
+			os.Args[0], version, revision, build,
+		)
+		flag.PrintDefaults()
+	}
+	flag.Parse()
+	x, err := convertKanaToRomaji(*kFlag)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(x)
+}
+
 // https://www.ezairyu.mofa.go.jp/passport/hebon.html
 var kanaToRomaji = map[rune]string{
 	'あ': "a", 'い': "i", 'う': "u", 'え': "e", 'お': "o",
@@ -51,24 +68,6 @@ var kanaToRomajiCombo = map[string]string{
 	"ふぁ": "fua", "ふぃ": "fui", "ふぇ": "fue",
 	"でぃ": "dei", "でゅ": "deyu", "うぃ": "ui",
 	"ゔぁ": "ba", "ゔぃ": "bi", "ゔ": "bu", "ゔぇ": "be", "ゔぉ": "bo",
-}
-
-func main() {
-	flag.Usage = func() {
-		fmt.Fprintf(
-			flag.CommandLine.Output(),
-			"Name:    %s\nVersion: %s\nBuild:   %s\nRevision %s\nOPTIONS:\n",
-			os.Args[0], version, build, revision,
-		)
-		flag.PrintDefaults()
-	}
-	flag.Parse()
-	x, err := convertKanaToRomaji(*kFlag)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(x)
-
 }
 
 func convertKanaToRomaji(ks string) (rs string, err error) {
