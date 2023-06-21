@@ -22,5 +22,5 @@ $ gox -arch="amd64 arm64" -os="linux darwin windows" \
 
 ```sh
 # go install github.com/tcnksm/ghr@latest
-ghr $VERSION ./dist/
+$ ghr $VERSION ./dist/
 ```
