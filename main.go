@@ -7,8 +7,12 @@ import (
 	"os"
 )
 
-var kFlag = flag.String("k", "こんにちわ", "hiragana string value that is converted to romaji.")
-var version string = "vX.X.X"
+var (
+	kFlag    = flag.String("k", "こんにちわ", "hiragana string value that is converted to romaji.")
+	version  string
+	revision string
+	build    string
+)
 
 // https://www.ezairyu.mofa.go.jp/passport/hebon.html
 var kanaToRomaji = map[rune]string{
@@ -53,8 +57,8 @@ func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(
 			flag.CommandLine.Output(),
-			"Name:     %s\nVersion:  %s\nOPTIONS:\n",
-			os.Args[0], version,
+			"Name:    %s\nVersion: %s\nBuild:   %s\nRevision %s\nOPTIONS:\n",
+			os.Args[0], version, build, revision,
 		)
 		flag.PrintDefaults()
 	}
